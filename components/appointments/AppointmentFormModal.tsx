@@ -4,6 +4,15 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import type { Appointment, AppointmentStatus } from '@/types/appointments';
 
+type Prefill = {
+	patientName?: string;
+	doctor?: string;
+	type?: string;
+	date?: string; // YYYY-MM-DD
+	time?: string; // HH:MM
+	notes?: string;
+};
+
 type Mode = 'create' | 'edit';
 
 type Props = {
@@ -14,6 +23,7 @@ type Props = {
 	types: string[];
 	onClose: () => void;
 	onSubmit: (data: Appointment) => void;
+	prefill?: Prefill;
 };
 
 function getFocusableElements(container: HTMLElement) {
@@ -69,6 +79,7 @@ export default function AppointmentFormModal({
 	types,
 	onClose,
 	onSubmit,
+	prefill,
 }: Props) {
 	const dialogRef = useRef<HTMLElement | null>(null);
 	const firstFieldRef = useRef<HTMLInputElement | null>(null);
@@ -92,15 +103,15 @@ export default function AppointmentFormModal({
 			};
 		}
 		return {
-			patientName: '',
-			doctor: doctors[0] ?? 'Dr. Patel',
-			type: types[0] ?? 'Consultation (30m)',
-			date: '',
-			time: '',
+			patientName: prefill?.patientName ?? '',
+			doctor: prefill?.doctor ?? doctors[0] ?? 'Dr. Patel',
+			type: prefill?.type ?? types[0] ?? 'Consultation (30m)',
+			date: prefill?.date ?? '',
+			time: prefill?.time ?? '',
 			status: 'Booked' as AppointmentStatus,
-			notes: '',
+			notes: prefill?.notes ?? '',
 		};
-	}, [doctors, types, isEdit, initial]);
+	}, [doctors, types, isEdit, initial, prefill]);
 
 	const [patientName, setPatientName] = useState(initialValues.patientName);
 	const [doctor, setDoctor] = useState(initialValues.doctor);

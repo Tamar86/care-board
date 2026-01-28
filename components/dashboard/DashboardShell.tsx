@@ -45,6 +45,7 @@ export default function DashboardShell({
 						<input
 							className='w-full rounded-xl border px-3 py-2 text-sm hover:bg-neutral-50 focus:outline-none'
 							placeholder='Search patients, appointments...'
+							suppressHydrationWarning
 						/>
 					</div>
 

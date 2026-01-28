@@ -65,3 +65,9 @@ export const statuses: (AppointmentStatus | 'All')[] = [
 	'Cancelled',
 	'No-show',
 ];
+
+export function normalizeName(name: string) {
+	return name.trim().toLowerCase();
+}
+
+export const STORAGE_KEY = 'clinicflow_appointments_v1';

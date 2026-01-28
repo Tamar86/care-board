@@ -16,6 +16,21 @@ export function formatDateTime(iso: string) {
 	return `${byType.weekday}, ${byType.day} ${byType.month}, ${byType.hour}:${byType.minute}`;
 }
 
+export function formatTime(iso: string) {
+	const d = new Date(iso);
+	return d.toLocaleTimeString(undefined, {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+}
+
+export function yyyyMmDd(d: Date) {
+	const y = d.getFullYear();
+	const m = String(d.getMonth() + 1).padStart(2, '0');
+	const day = String(d.getDate()).padStart(2, '0');
+	return `${y}-${m}-${day}`;
+}
+
 export function startOfDay(d: Date) {
 	return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
 }
@@ -73,4 +88,8 @@ function inCustomRange(dateISO: string, from: string, to: string) {
 	if (fromBound && dt < fromBound) return false;
 	if (toBound && dt > toBound) return false;
 	return true;
+}
+
+export function shortWeekday(d: Date) {
+	return d.toLocaleDateString(undefined, { weekday: 'short' }); // Mon, Tue...
 }
